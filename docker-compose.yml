@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  avalon-game:
+    container_name: avalon-game
+    build: ./GameLogic
+    ports:
+      - 8080:8080
+    links:
+      - mongo
+  email:
+    container_name: avalon-email
+    build: ./EmailHandlerAvalon
+    ports:
+      - 8000:8000
+    links:
+      - mongo
+      - avalon-game
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - 27017:27017
