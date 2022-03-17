@@ -5,9 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import smtplib
 import requests
+import os
 
 #------- secret app password ----------
-login_password = 'APP PASSWORD'
+login_password = os.environ.get("APP_PASSWORD_EMAIL")
+login_email =  os.environ.get("EMAIL_ADDRESS",'avalon.f.pass@gmail.com')
 #--------------------------------------
 
 my_header = {
@@ -17,7 +19,7 @@ my_header = {
 
 
 
-login_email = 'avalon.f.pass@gmail.com'
+
 d_from_address = login_email
 d_subject = 'forgotten_password'
 
@@ -84,9 +86,6 @@ def email(request):
 
             requests.put("http://avalon-game:8080/user/" + u['username'], headers=my_header, json=u)
 
-            email_body = d_body + new_password
-        
-            print(email_body)
 
             send_direct_mail(from_address=str(d_from_address),
                             to_address=str(u['email']), subject=d_subject, body=('Your new password is -> ' + new_password))
