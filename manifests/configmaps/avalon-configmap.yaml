@@ -4,4 +4,4 @@ metadata:
   name: avalon-configmap
 data:
   django-email-address: avalon.f.pass@gmail.com
-  django-debug: 1
+  django-debug: "1"

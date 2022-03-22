@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: avalon-emailhandler
-          image: blu3berrywhy/avalon-emailhandler
+          image: blu3berrywhy/avalon-emailhandler:v1
           ports:
             - containerPort: 8000
-           env:
+          env:
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
@@ -40,6 +40,16 @@ spec:
                 configMapKeyRef:
                   name: avalon-configmap
                   key: django-email-address
+            - name: CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_url
+            - name: KTOR_APP
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: ktor-app
 ---
 apiVersion: v1
 kind: Service

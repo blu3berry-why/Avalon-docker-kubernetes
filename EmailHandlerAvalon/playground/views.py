@@ -32,7 +32,7 @@ def get_database():
     import pymongo
 
     # Provide the mongodb atlas url to connect python to mongodb using pymongo
-    CONNECTION_STRING = "mongodb://mongo:27017/docker_mongo"
+    CONNECTION_STRING = os.environ.get("CONNECTION_STRING")
 
     # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
     from pymongo import MongoClient
@@ -84,7 +84,7 @@ def email(request):
 
             u['password'] = new_password
 
-            requests.put("http://avalon-game:8080/user/" + u['username'], headers=my_header, json=u)
+            requests.put(os.environ.get("KTOR_APP") + u['username'], headers=my_header, json=u)
 
 
             send_direct_mail(from_address=str(d_from_address),

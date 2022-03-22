@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gamelogic
-          image: blu3berrywhy/avalon-gamelogic
+          image: blu3berrywhy/avalon-gamelogic:v1.0.0
           ports:
             - containerPort: 8000
 
