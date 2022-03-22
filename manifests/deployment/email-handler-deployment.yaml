@@ -40,3 +40,15 @@ spec:
                 configMapKeyRef:
                   name: avalon-configmap
                   key: django-email-address
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: avalon-emailhandler
+spec:
+  selector:
+    app: avalon-emailhandler
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
