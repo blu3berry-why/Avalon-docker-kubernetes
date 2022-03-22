@@ -10,7 +10,7 @@ RUN dos2unix gradlew
 RUN bash gradlew shadowJar
 
 WORKDIR /run
-RUN cp /src/build/libs/*.jar /run/server.jar
+RUN cp /src/build/libs/ktor-sample-hcoon-0.0.1-all.jar /run/server.jar
 
 EXPOSE 8080
 

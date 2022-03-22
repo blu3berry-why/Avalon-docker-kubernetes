@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: avalon-email-configmap
+data:
+  debug: 1
+  email-address: avalon.f.pass@gmail.com
