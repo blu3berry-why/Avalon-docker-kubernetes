@@ -19,7 +19,7 @@ object Singletons {
         KMongo.createClient(/*
         This is where I would read the connection string but leaving it empty it should run on localhost
         HoconApplicationConfig(ConfigFactory.load()).property("mongo.connection").getString()*/
-        "mongodb://mongo:27017/docker_mongo"
+        System.getenv("CONNECTION_STRING") ?: "no connstring found"
         ).coroutine.getDatabase("Archimedes-Rest") }
     val Lobbies by lazy { db.getCollection<Lobby>() }
     val Users by lazy { db.getCollection<User>() }

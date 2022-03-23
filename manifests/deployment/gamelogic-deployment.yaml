@@ -16,9 +16,15 @@ spec:
     spec:
       containers:
         - name: gamelogic
-          image: blu3berrywhy/avalon-gamelogic:v1.0.0
+          image: blu3berrywhy/avalon-gamelogic:v1.0.1
           ports:
             - containerPort: 8000
+          env:
+            - name: CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_url
 
 ---
 apiVersion: v1
