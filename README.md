@@ -4,5 +4,11 @@
 > https://app.swaggerhub.com/apis/goodluck0638/avalon/1.0.0#/
 
 ### Forgotten password request:
-> to /playground/email
-> { "email" : "`email address`"}
+> to path:
+> /playground/email
+> 
+> request json :
+> 
+> { 
+> "email" : "`email address`"
+> }
