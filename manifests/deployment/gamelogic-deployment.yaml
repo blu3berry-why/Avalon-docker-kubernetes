@@ -18,7 +18,7 @@ spec:
         - name: gamelogic
           image: blu3berrywhy/avalon-gamelogic:v1.0.1
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
           env:
             - name: CONNECTION_STRING
               valueFrom:
@@ -39,3 +39,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
+

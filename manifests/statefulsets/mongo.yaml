@@ -36,6 +36,12 @@ spec:
           volumeMounts:
             - name: www
               mountPath: /usr/share/nginx/html
+        #- name: mongo-exporter
+        #  image: bitnami/mongodb-exporter
+        #  ports:
+        #    - containerPort: 27018
+        #      name: mongo-exporter
+
   #       volumeMounts:
   #          - name: database
   #            mountPath: /data
