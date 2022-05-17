@@ -1,0 +1,7 @@
+deployment:
+  image: "avalon-gamelogic"
+  registry: "blu3berrywhy"
+  tag: "v1.0.1"
+  containerPort: 8080
+
+name: "gamelogic"

@@ -1,0 +1,11 @@
+name: avalon-ingress
+
+services:
+  email_service:
+    name: avalon-email-handler
+    port: 80
+    prefix: /playground
+  gamelogic_service:
+    name: gamelogic
+    port: 80
+    prefix: /

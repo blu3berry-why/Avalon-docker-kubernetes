@@ -35,6 +35,6 @@ kubectl apply -f statefulsets\mongo.yaml
 kubectl apply -f ingress\avalon-ingress.yaml
 
 :: Exporter
-helm install mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f exporter/values.yaml
+::helm install mongodb-exporter prometheus-community/prometheus-mongodb-exporter -f exporter/values.yaml
 
 PAUSE

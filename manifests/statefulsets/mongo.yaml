@@ -36,11 +36,21 @@ spec:
           volumeMounts:
             - name: www
               mountPath: /usr/share/nginx/html
-        #- name: mongo-exporter
-        #  image: bitnami/mongodb-exporter
-        #  ports:
-        #    - containerPort: 27018
-        #      name: mongo-exporter
+        - name: mongo-exporter
+          image: bitnami/mongodb-exporter:latest
+          ports:
+            - containerPort: 9216
+              name: mongo-metrics
+          args:
+            [
+              "--mongodb.uri=mongodb://127.0.0.1:27017/",
+              "--web.listen-address=:9216",
+            ]
+  #           - --web.listen-address=:9216
+
+  #serviceMonitor:
+  #  additionalLabels:
+  #    release: prometheus
 
   #       volumeMounts:
   #          - name: database

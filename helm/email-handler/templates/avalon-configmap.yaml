@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.name}}
+data:
+  django-email-address: {{.Values.config.email}}
+  django-debug: "1"

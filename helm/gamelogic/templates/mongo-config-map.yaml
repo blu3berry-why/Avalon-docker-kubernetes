@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: mongodb-configmap
 data:
-  database_url: mongodb://mongodb
-  ktor-app: gamelogic
+  database_url: mongodb+srv://blu3berry:GYENESEmatyi01@archimedes.j1fok.mongodb.net/admin?authSource=admin&replicaSet=atlas-5z1ugy-shard-0&readPreference=primary&ssl=true
+  ktor-app: {{.Values.name}}
   setup.sh: |-
     #!/bin/bash
 
