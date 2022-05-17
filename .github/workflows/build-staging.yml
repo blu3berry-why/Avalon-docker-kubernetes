@@ -16,12 +16,12 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v2.0.0
@@ -55,3 +55,40 @@ jobs:
           push: true
           tags: ${{secrets.ACR_NAME}}/email-handler:latest
        
+  deploy:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v2.0
+        
+      - name: Azure Kubernetes set context
+        uses: Azure/aks-set-context@v2.1
+        with:
+          # Resource Group Name
+          resource-group: ${{ secrets.RESOURCE_GROUP }}
+          # AKS Cluster Name
+          cluster-name: ${{ secrets.CLUSTER_NAME }}
+          # AKS Cluster Subscription
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+      - name: Helm deploy
+        run: |
+         helm upgrade \
+            --install \
+            --create-namespace \
+            --atomic \
+            --wait \
+            --namespace staging \
+            avalon \
+            ./helm/avalon \
+            --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
+            --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
+            --set email-handler.deployment.image=email-handler \
+            --set gamelogic.deployment.image=gamelogic 
+
+      
