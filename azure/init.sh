@@ -3,7 +3,7 @@
 echo "Defining variables..."
 export RESOURCE_GROUP_NAME=avalon-k8s-rg
 export AKS_NAME=avalon-k8s-cn
-export ACR_NAME=avalon-k8s-acr
+export ACR_NAME=avalonblu3berry
 
 echo "Searching for resource group..."
 az group create -n $RESOURCE_GROUP_NAME -l westeurope
