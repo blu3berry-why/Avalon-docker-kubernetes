@@ -84,8 +84,6 @@ jobs:
          helm upgrade \
             --install \
             --create-namespace \
-            --atomic \
-            --wait \
             --namespace staging \
             avalon \
             . \
@@ -93,5 +91,6 @@ jobs:
             --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
             --set email-handler.deployment.image=email-handler \
             --set gamelogic.deployment.image=gamelogic 
-
+#            --atomic \
+#            --wait \
       
