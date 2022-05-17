@@ -37,4 +37,6 @@ bin/
 
 hs_err_pid*.log
 
-*.conf
+
+
+!/main/resources/application.conf
