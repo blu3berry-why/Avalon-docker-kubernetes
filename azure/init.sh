@@ -6,7 +6,7 @@ export AKS_NAME=avalon-k8s-cn
 export ACR_NAME=avalon-k8s-acr
 
 echo "Searching for resource group..."
-az group create -n $RESOURCE_GROUP_NAME -l westeu
+az group create -n $RESOURCE_GROUP_NAME -l westeurope
 
 echo "Creating cluster..."
 az aks create \

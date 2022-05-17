@@ -22,3 +22,17 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
+
+dependencies:
+  - name: gamelogic
+    version: 0.1.0
+    condition: dependencies.gamelogic.enabled
+    repository: file://../gamelogic
+  - name: email-handler
+    version: 0.1.1
+    condition: dependencies.email.enabled
+    repository: file://../email-handler
+  - name: traefik
+    version: 10.19.5
+    condition: dependencies.traefik.enabled
+    repository: https://helm.traefik.io/traefik

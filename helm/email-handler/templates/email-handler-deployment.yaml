@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{.Values.name}}
-          image: {{.values.deployment.registry}}/{{.values.deployment.image}}:{{.values.deployment.image}}
+          image: {{.Values.deployment.registry}}/{{.Values.deployment.image}}:{{.Values.deployment.tag}}
           ports:
             - containerPort: 8000
           env:
