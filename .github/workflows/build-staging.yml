@@ -91,7 +91,9 @@ jobs:
             --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
             --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
             --set email-handler.deployment.image=email-handler \
-            --set gamelogic.deployment.image=gamelogic 
+            --set gamelogic.deployment.image=gamelogic \
+            --set email-handler.deployment.tag=latest \
+            --set gamelogic.deployment.tag=latest
 #            --atomic \
 #            --wait \
       
