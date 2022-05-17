@@ -65,7 +65,7 @@ metadata:
 spec:
   selector:
     app: {{.Values.name}}
-  type: LoadBalancer
+#  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 80
