@@ -6,3 +6,4 @@ metadata:
 data:
   django-email-address: {{.Values.config.email}}
   django-debug: "1"
+  host: {{.Values.config.host}}

@@ -7,6 +7,7 @@ deployment:
 
 config:
   email: "avalon.f.pass@gmail.com"
+  host: "20.234.240.215"
 
 secret:
   key: "ZGphbmdvLWluc2VjdXJlLWg0dCRkXndibzU3XzM5XzZlY3ZtcW55YTFuI2ltKHYtKjgreGckJHQhKzlqXkAtcGQm"

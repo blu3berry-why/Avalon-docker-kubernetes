@@ -29,7 +29,7 @@ dependencies:
     condition: dependencies.gamelogic.enabled
     repository: file://../gamelogic
   - name: email-handler
-    version: 0.1.1
+    version: 0.1.2
     condition: dependencies.email.enabled
     repository: file://../email-handler
   - name: traefik
