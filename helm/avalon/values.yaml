@@ -17,3 +17,27 @@ dependencies:
     enabled: true
   traefik:
     enabled: true
+
+email-handler:
+  name: avalon-email-handler
+
+  deployment:
+    image: "avalon-emailhandler"
+    registry: "blu3berrywhy"
+    tag: "v1"
+
+  config:
+    email: "avalon.f.pass@gmail.com"
+
+  secret:
+    key: "ZGphbmdvLWluc2VjdXJlLWg0dCRkXndibzU3XzM5XzZlY3ZtcW55YTFuI2ltKHYtKjgreGckJHQhKzlqXkAtcGQm"
+    password: "bnZraHJ1Zmlwc2RxYXBvcA=="
+
+gamelogic:
+  deployment:
+    image: "avalon-gamelogic"
+    registry: "blu3berrywhy"
+    tag: "v1.0.1"
+    containerPort: 8080
+
+  name: "gamelogic"
