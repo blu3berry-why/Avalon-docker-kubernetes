@@ -42,6 +42,7 @@ jobs:
         
       - name: Helm deploy
         run: |
+         cd ./helm/avalon ;
          helm upgrade \
             --install \
             --create-namespace \
