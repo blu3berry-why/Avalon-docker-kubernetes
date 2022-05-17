@@ -79,6 +79,8 @@ jobs:
         
       - name: Helm deploy
         run: |
+         cd ./helm/avalon ;
+         helm dependency build ;
          helm upgrade \
             --install \
             --create-namespace \
@@ -86,7 +88,7 @@ jobs:
             --wait \
             --namespace staging \
             avalon \
-            ./helm/avalon \
+            . \
             --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
             --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
             --set email-handler.deployment.image=email-handler \
