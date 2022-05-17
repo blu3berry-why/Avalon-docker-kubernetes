@@ -5,3 +5,7 @@ deployment:
   containerPort: 8080
 
 name: "gamelogic"
+
+
+database:
+  url: my-mongodb-svc.mongodb

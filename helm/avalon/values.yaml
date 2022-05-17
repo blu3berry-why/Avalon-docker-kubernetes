@@ -42,3 +42,6 @@ gamelogic:
     containerPort: 8080
 
   name: "gamelogic"
+
+  database:
+    url: mongodb://user1:admin123@my-mongodb-svc.mongodb/Archimedes-Rest?readPreference=primaryPreferred

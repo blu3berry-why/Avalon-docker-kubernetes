@@ -4,12 +4,16 @@ kind: MongoDBCommunity
 metadata:
   name: my-mongodb
   namespace: mongodb
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9216"
 spec:
   members: 3
   type: ReplicaSet
   version: "5.0.5"
-  matchLabels:
-    app: mongo-c # has to match .spec.template.metadata.labels
+  #  matchLabels:
+  #    app: mongo-c # has to match .spec.template.metadata.labels
   security:
     authentication:
       modes:
@@ -22,8 +26,22 @@ spec:
       roles:
         - name: clusterAdmin
           db: admin
+        - name: "readWrite"
+          db: admin
         - name: userAdminAnyDatabase
           db: admin
+      scramCredentialsSecretName: my-scram
+    - name: user1
+      db: Archimedes-Rest
+      passwordSecretRef:
+        name: admin-user-password
+      roles:
+        - name: clusterAdmin
+          db: Archimedes-Rest
+        - name: "readWrite"
+          db: Archimedes-Rest
+        - name: userAdminAnyDatabase
+          db: Archimedes-Rest
       scramCredentialsSecretName: my-scram
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
@@ -41,6 +59,8 @@ spec:
                   cpu: 500m
                   memory: 1Gi
             - name: mongo-exporter
+              labels:
+                app: mongo-metrics
               image: bitnami/mongodb-exporter:latest
               ports:
                 - containerPort: 9216
