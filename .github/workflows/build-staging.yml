@@ -77,10 +77,13 @@ jobs:
           # AKS Cluster Subscription
           creds: ${{ secrets.AZURE_CREDENTIALS }}
         
-      - name: Helm deploy
+      - name: Helm dependency build
         run: |
          cd ./helm/avalon ;
-         helm dependency build ;
+         helm dependency build 
+        
+      - name: Helm deploy
+        run: |
          helm upgrade \
             --install \
             --create-namespace \
