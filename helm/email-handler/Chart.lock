@@ -1,6 +1,0 @@
-dependencies:
-- name: gamelogic
-  repository: ""
-  version: 0.1.0
-digest: sha256:ee1b1681e92492187ea92f99df9bacf8124869b2115fca3eacb836baeed6c8df
-generated: "2022-05-17T12:00:47.8113059+02:00"

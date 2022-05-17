@@ -9,3 +9,11 @@ services:
     name: gamelogic
     port: 80
     prefix: /
+
+dependencies:
+  gamelogic:
+    enabled: true
+  email:
+    enabled: true
+  traefik:
+    enabled: true
