@@ -28,8 +28,6 @@ jobs:
         
       - name: test
         run: |
-          sudo apt-get update;
-          sudo apt-get -y install systemctl ;
           systemctl restart docker ;
           ls
         
