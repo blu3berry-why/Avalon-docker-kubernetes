@@ -51,6 +51,11 @@ spec:
                 configMapKeyRef:
                   name: mongodb-configmap
                   key: ktor-app
+            - name: ALLOWED_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Values.name}}
+                  key: host               
 ---
 apiVersion: v1
 kind: Service
