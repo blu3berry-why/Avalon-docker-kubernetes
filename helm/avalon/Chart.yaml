@@ -25,11 +25,11 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: gamelogic
-    version: 0.1.0
+    version: 0.1.1
     condition: dependencies.gamelogic.enabled
     repository: file://../gamelogic
   - name: email-handler
-    version: 0.1.3
+    version: 0.1.4
     condition: dependencies.email.enabled
     repository: file://../email-handler
   - name: traefik
