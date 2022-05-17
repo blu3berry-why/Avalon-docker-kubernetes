@@ -1,6 +1,7 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
+  namespace: {{default "staging" .Release.Namespace}}
   name: {{.Values.name}}
 spec:
   maxReplicas: 10 # define max replica count

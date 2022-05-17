@@ -1,6 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  namespace: {{default "staging" .Release.Namespace}}
   name: {{.Values.name}}
 #  labels:
 #    app: gamelogic

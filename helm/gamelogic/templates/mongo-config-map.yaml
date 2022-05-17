@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  namespace: {{default "staging" .Release.Namespace}}
   name: mongodb-configmap
 data:
   database_url: mongodb+srv://blu3berry:GYENESEmatyi01@archimedes.j1fok.mongodb.net/admin?authSource=admin&replicaSet=atlas-5z1ugy-shard-0&readPreference=primary&ssl=true
