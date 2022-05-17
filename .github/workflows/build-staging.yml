@@ -28,7 +28,9 @@ jobs:
         
       - name: test
         run: |
-          restart docker ;
+          sudo apt-get update;
+          sudo apt-get -y install systemctl ;
+          systemctl restart docker ;
           ls
         
       - name: Docker Login
