@@ -79,6 +79,7 @@ jobs:
         
       - name: Helm deploy
         run: |
+         helm del avalon --namespace staging ;
          cd ./helm/avalon ;
          helm dependency build ;
          helm upgrade \
