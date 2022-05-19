@@ -4,6 +4,8 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-51"
   creationTimestamp: null
   name: mongodbcommunity.mongodbcommunity.mongodb.com
 spec:
