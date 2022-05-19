@@ -78,9 +78,8 @@ jobs:
       - name: Helm EFK dependency build
         run: |
           cd ./helm/efk ;
-          helm dependency build ;
+          helm dependency update ;
           cd ..
-          
 
       - name: Helm deploy EFK
         run: |
@@ -88,36 +87,33 @@ jobs:
           helm upgrade \
             --install \
             efk \
-            ./efk \
+            ./helm/efk \
 
       - name: Helm Mongo dependency build
         run: |
-          cd ./mongoMonitor ;
-          helm dependency build ;
-          cd ..
+          cd ./helm/mongoMonitor ;
+          helm dependency update ;
 
       - name: Helm deploy Mongo
         run: |
           helm upgrade \
             --install \
             mongo \
-            ./mongoMonitor \
+            ./helm/mongoMonitor \
 
       - name: Helm Avalon dependency build
         run: |
-          cd ./avalon ;
-          helm dependency build ;
-          cd ..
+          cd ./helm/avalon ;
+          helm dependency update ;
 
       - name: Helm deploy Avalon
         run: |
-          cd ./helm/avalon ;
           helm upgrade \
              --install \
              --create-namespace \
              --namespace staging \
              avalon \
-             ./avalon \
+             ./helm/avalon \
              --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
              --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
              --set email-handler.deployment.image=email-handler \
