@@ -83,9 +83,10 @@ jobs:
 
       - name: Helm deploy EFK
         run: |
-          ls;
           helm upgrade \
             --install \
+            --create-namespace \
+            --namespace efklogging \
             efk \
             ./helm/efk \
 
