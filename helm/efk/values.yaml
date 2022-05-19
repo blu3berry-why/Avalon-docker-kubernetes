@@ -1,0 +1,40 @@
+dependencies:
+  elasticsearch:
+    enabled: true
+  kibana:
+    enabled: true
+  fluentd:
+    enabled: true
+
+elasticsearch:
+  clusterName: "elasticsearch"
+  nodeGroup: "master"
+
+  # The service that non master groups will try to connect to when joining the cluster
+  # This should be set to clusterName + "-" + nodeGroup for your master group
+  masterService: ""
+
+  # Elasticsearch roles that will be applied to this nodeGroup
+  # These will be set as environment variables. E.g. node.master=true
+  roles:
+    master: "true"
+    ingest: "true"
+    data: "true"
+    remote_cluster_client: "true"
+    ml: "true"
+
+  replicas: 1
+  minimumMasterNodes: 1
+
+  # Hard means that by default pods will only be scheduled if there are enough nodes for them
+  # and that they will never end up on the same node. Setting this to soft will do this "best effort"
+  antiAffinity: "soft"
+
+kibana:
+  elasticsearchHosts: http://elasticsearch-master-headless:9200
+fluentd:
+  aggregator.configMap: elasticsearch-output
+  aggregator.extraEnv[0].name: ELASTICSEARCH_HOST
+  aggregator.extraEnv[0].value: http://elasticsearch-master-headless
+  aggregator.extraEnv[1].name: ELASTICSEARCH_PORT
+  aggregator.extraEnv[1].value: 9200

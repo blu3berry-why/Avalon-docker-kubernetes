@@ -76,20 +76,47 @@ jobs:
           cluster-name: ${{ secrets.CLUSTER_NAME }}
           # AKS Cluster Subscription
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-      - name: Helm dependency build
+
+      - name: Helm EFK dependency build
         run: |
-         cd ./helm/avalon ;
-         helm dependency build 
-        
-      - name: Helm deploy
+         cd ./helm/efk ;
+         helm dependency build ;
+         cd ..
+
+      - name: Helm deploy EFK
+        run: |
+          helm upgrade \
+            --install \
+            efk \
+            ./efk \
+
+      - name: Helm Mongo dependency build
+        run: |
+         cd ./mongoMonitor ;
+         helm dependency build ;
+         cd ..
+
+      - name: Helm deploy Mongo
+        run: |
+          helm upgrade \
+            --install \
+            mongo \
+            ./mongoMonitor \
+
+      - name: Helm Avalon dependency build
+        run: |
+         cd ./avalon ;
+         helm dependency build ;
+         cd ..
+
+      - name: Helm deploy Avalon
         run: |
          helm upgrade \
             --install \
             --create-namespace \
             --namespace staging \
             avalon \
-            . \
+            ./avalon \
             --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
             --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
             --set email-handler.deployment.image=email-handler \

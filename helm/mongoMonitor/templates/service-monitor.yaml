@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mongo2
+  namespace: mongodb
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: mongodb-svc
+  endpoints:
+    - port: mongo-metrics

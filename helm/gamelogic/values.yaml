@@ -6,6 +6,6 @@ deployment:
 
 name: "gamelogic"
 
-
 database:
   url: my-mongodb-svc.mongodb
+

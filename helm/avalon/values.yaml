@@ -8,7 +8,7 @@ services:
   gamelogic_service:
     name: gamelogic
     port: 80
-    prefix: /
+    prefix: /game
 
 dependencies:
   gamelogic:
@@ -44,4 +44,4 @@ gamelogic:
   name: "gamelogic"
 
   database:
-    url: mongodb://user1:admin123@my-mongodb-svc.mongodb/Archimedes-Rest?readPreference=primaryPreferred
+    url: mongodb://user1:user123@mongodb-svc.mongodb/Archimedes-Rest?readPreference=primaryPreferred

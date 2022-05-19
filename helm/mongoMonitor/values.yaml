@@ -1,0 +1,47 @@
+mongoReplicaset:
+  namespace: mongodb
+
+  name: mongodb
+
+  secret:
+    adminpassword: admin123
+    userpassword: user123
+
+  db:
+    admindb: admin
+    userdb: Archimedes-Rest
+    adminname: admin-user
+    username: user1
+
+  metrics:
+    port: 9216
+
+dependencies:
+  replicaset:
+    enabled: true
+
+  prometheus:
+    enabled: true
+
+monitoring:
+  # needs to be the same with kube-prometheus-stack.namespaceOverride
+  namespace: monitoring
+
+kube-prometheus-stack:
+  namespaceOverride: monitoring
+
+  commonLabels:
+  #    "release": prometheus
+
+  prometheus:
+    prometheusSpec:
+      ruleNamespaceSelector: {}
+
+      serviceMonitorSelector:
+        matchLabels:
+      #          release: prometheus
+      serviceMonitorNamespaceSelector:
+        matchLabels:
+  #          release: prometheus
+#  grafana:
+#    namespaceOverride: "grafana"

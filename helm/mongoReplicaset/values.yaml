@@ -1,0 +1,16 @@
+namespace: mongodb
+
+name: mongodb
+
+secret:
+  adminpassword: admin123
+  userpassword: user123
+
+db:
+  admindb: admin
+  userdb: Archimedes-Rest
+  adminname: admin-user
+  username: user1
+
+metrics:
+  port: 9216

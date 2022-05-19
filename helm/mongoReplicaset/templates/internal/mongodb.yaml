@@ -2,8 +2,8 @@
 apiVersion: mongodbcommunity.mongodb.com/v1
 kind: MongoDBCommunity
 metadata:
-  name: my-mongodb
-  namespace: mongodb
+  name: {{.Values.name}}
+  namespace: {{.Values.namespace}}
 spec:
   members: 3
   type: ReplicaSet
@@ -15,29 +15,29 @@ spec:
       modes:
         - SCRAM
   users:
-    - name: admin-user
-      db: admin
+    - name: {{.Values.db.adminname}}
+      db: {{.Values.db.admindb}}
       passwordSecretRef:
-        name: admin-user-password
+        name: {{.Values.name}}-admin-secret
       roles:
         - name: clusterAdmin
-          db: admin
+          db: {{.Values.db.admindb}}
         - name: "readWrite"
-          db: admin
+          db: {{.Values.db.admindb}}
         - name: userAdminAnyDatabase
-          db: admin
+          db: {{.Values.db.admindb}}
       scramCredentialsSecretName: my-scram
-    - name: user1
-      db: Archimedes-Rest
+    - name: {{.Values.db.username}}
+      db: {{.Values.db.userdb}}
       passwordSecretRef:
-        name: admin-user-password
+        name: {{.Values.name}}-user-secret
       roles:
-        - name: clusterAdmin
-          db: Archimedes-Rest
+#        - name: clusterAdmin
+#          db: Archimedes-Rest
         - name: "readWrite"
-          db: Archimedes-Rest
-        - name: userAdminAnyDatabase
-          db: Archimedes-Rest
+          db: {{.Values.db.userdb}}
+#        - name: userAdminAnyDatabase
+#          db: Archimedes-Rest
       scramCredentialsSecretName: my-scram
   additionalMongodConfig:
     storage.wiredTiger.engineConfig.journalCompressor: zlib
@@ -55,11 +55,9 @@ spec:
                   cpu: 500m
                   memory: 1Gi
             - name: mongo-exporter
-              labels:
-                app: mongo-metrics
               image: bitnami/mongodb-exporter:latest
               ports:
-                - containerPort: 9216
+                - containerPort: {{.Values.metrics.port}}
                   name: mongo-metrics
               args:
                 [
