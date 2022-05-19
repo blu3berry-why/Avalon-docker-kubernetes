@@ -6,25 +6,22 @@ name: Deploy
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
-
+    branches: [main]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   deploy:
-  
-    runs-on: ubuntu-latest   
+    runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
+
       - name: Helm tool installer
         uses: Azure/setup-helm@v2.0
-        
+
       - name: Azure Kubernetes set context
         uses: Azure/aks-set-context@v1.1
         with:
@@ -34,26 +31,55 @@ jobs:
           cluster-name: ${{ secrets.CLUSTER_NAME }}
           # AKS Cluster Subscription
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-      - name: Helm dependency build
+
+      - name: Helm EFK dependency build
         run: |
-         cd ./helm/avalon ;
-         helm dependency build 
-        
-      - name: Helm deploy
+          cd ./helm/efk ;
+          helm dependency build ;
+          cd ..
+
+      - name: Helm deploy EFK
         run: |
-         cd ./helm/avalon ;
-         helm upgrade \
+          ls;
+          helm upgrade \
             --install \
-            --create-namespace \
-            --namespace staging \
-            avalon \
-            . \
-            --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
-            --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
-            --set email-handler.deployment.image=email-handler \
-            --set gamelogic.deployment.image=gamelogic \
-            --set email-handler.deployment.tag=latest \
-            --set gamelogic.deployment.tag=latest
+            efk \
+            ./efk \
+
+      - name: Helm Mongo dependency build
+        run: |
+          cd ./mongoMonitor ;
+          helm dependency build ;
+          cd ..
+
+      - name: Helm deploy Mongo
+        run: |
+          helm upgrade \
+            --install \
+            mongo \
+            ./mongoMonitor \
+
+      - name: Helm Avalon dependency build
+        run: |
+          cd ./avalon ;
+          helm dependency build ;
+          cd ..
+
+      - name: Helm deploy Avalon
+        run: |
+          cd ./helm/avalon ;
+          helm upgrade \
+             --install \
+             --create-namespace \
+             --namespace staging \
+             avalon \
+             ./avalon \
+             --set email-handler.deployment.registry=${{ secrets.ACR_NAME }} \
+             --set gamelogic.deployment.registry=${{ secrets.ACR_NAME }} \
+             --set email-handler.deployment.image=email-handler \
+             --set gamelogic.deployment.image=gamelogic \
+             --set email-handler.deployment.tag=latest \
+             --set gamelogic.deployment.tag=latest
+
 #            --atomic \
 #            --wait \
