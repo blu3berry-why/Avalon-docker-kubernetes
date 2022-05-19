@@ -1,0 +1,33 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: forward-auth-ingress
+  namespace: default #?
+spec:
+  entryPoints: # [1]
+    - forward-auth
+  routes: # [2]
+    - kind: Rule
+      match: PathPrefix('/test') #Host(`test.example.com`) # [3]
+      priority: 10 # [4]
+      middlewares: # [5]
+        - name: forward-auth # [6]
+          namespace: default # [7]
+      services: # [8]
+        - kind: Service
+          name: forward-auth
+          namespace: forward-auth
+          passHostHeader: true
+          port: 80 # [9]
+          responseForwarding:
+            flushInterval: 1ms
+          scheme: https
+          serversTransport: transport # [10]
+          sticky:
+            cookie:
+              httpOnly: true
+              name: cookie
+              secure: true
+              sameSite: none
+          strategy: RoundRobin
+          weight: 10

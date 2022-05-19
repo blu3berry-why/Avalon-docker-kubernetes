@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: gamelogic-hpa
@@ -9,4 +9,25 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: gamelogic
-  targetCPUUtilizationPercentage: 50 # target CPU utilization
+  behaviour:
+    scaleUp:
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 60
+    scaleDown:
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: Utilization
+        averageUtilization: 80
+    - type: Resource
+      resource:
+        name: memory
+        target: Utilization
+        averageUtilization: 70
