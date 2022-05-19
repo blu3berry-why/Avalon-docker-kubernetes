@@ -47,18 +47,6 @@ jobs:
             efk \
             ./helm/efk \
 
-      - name: Helm Mongo dependency build
-        run: |
-          cd ./helm/mongoMonitor ;
-          helm dependency update ;
-
-      - name: Helm deploy Mongo
-        run: |
-          helm upgrade \
-            --install \
-            mongo \
-            ./helm/mongoMonitor \
-
       - name: Helm Avalon dependency build
         run: |
           cd ./helm/avalon ;
@@ -78,6 +66,18 @@ jobs:
              --set gamelogic.deployment.image=gamelogic \
              --set email-handler.deployment.tag=latest \
              --set gamelogic.deployment.tag=latest
+
+      - name: Helm Mongo dependency build
+        run: |
+          cd ./helm/mongoMonitor ;
+          helm dependency update ;
+
+      - name: Helm deploy Mongo
+        run: |
+          helm upgrade \
+            --install \
+            mongo \
+            ./helm/mongoMonitor \
 
 #            --atomic \
 #            --wait \
