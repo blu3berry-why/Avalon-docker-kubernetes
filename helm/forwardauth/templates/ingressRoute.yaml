@@ -1,0 +1,55 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: forward-auth-ingress
+  namespace: default #?
+spec:
+  entryPoints: # [1]
+    - web
+  routes: # [2]
+    - kind: Rule
+      match: Path(`/`) #
+      priority: 10
+      services: # [8]
+        - kind: Service
+          name: gamelogic
+          namespace: default
+          port: 80 # [9]
+    - kind: Rule
+      match: PathPrefix(`/`) #
+      priority: 8
+      middlewares: # [5]
+        - name: forward-auth # [6]
+          namespace: default # [7]
+      services: # [8]
+        - kind: Service
+          name: gamelogic
+          namespace: default
+          port: 80 # [9]
+    - kind: Rule
+      match: PathPrefix(`/test`) #
+      priority: 10
+      middlewares: # [5]
+        - name: forward-auth # [6]
+          namespace: default # [7]
+      services: # [8]
+        - kind: Service
+          name: gamelogic
+          namespace: default
+          port: 80 # [9]
+    - kind: Rule
+      match: Path(`/login`) #
+      priority: 10
+      services: # [8]
+        - kind: Service
+          name: forward-auth
+          namespace: default
+          port: 80 # [9]
+    - kind: Rule
+      match: Path(`/register`) #
+      priority: 10
+      services: # [8]
+        - kind: Service
+          name: forward-auth
+          namespace: default
+          port: 80 # [9]

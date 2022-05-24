@@ -16,15 +16,15 @@ spec:
                 name: {{.Values.services.email_service.name}}
                 port:
                   number: {{.Values.services.email_service.port}}
-    - http:
-        paths:
-          - path: /test
-            pathType: Prefix
-            backend:
-              service:
-                name: {{.Values.services.gamelogic_service.name}}
-                port:
-                  number: {{.Values.services.gamelogic_service.port}}
+#    - http:
+#        paths:
+#          - path: /test
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: {{.Values.services.gamelogic_service.name}}
+#                port:
+#                  number: {{.Values.services.gamelogic_service.port}}
 
     - http:
         paths:
