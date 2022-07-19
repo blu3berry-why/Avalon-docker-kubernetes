@@ -14,3 +14,8 @@
 > { 
 > "email" : "`email address`"
 > }
+
+
+Documentation: 
+
+[Detailed documentation](https://drive.google.com/file/d/1WqeT9QUVd84j6KYCxnktzFR2D3-1BJ_e/view?usp=sharing)
