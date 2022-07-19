@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: forward-auth
-          image: flask
+          image: blu3berrywhy/avalon-forwardauth:v1.0.2
           ports:
             - containerPort: 5000
           env:
@@ -26,3 +26,8 @@ spec:
                 secretKeyRef:
                   name: forward-auth
                   key: secret
+            - name: CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_url

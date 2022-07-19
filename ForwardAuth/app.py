@@ -8,6 +8,7 @@ from flask import Response
 import os
 from time import time
 #import pyjwt
+from werkzeug.datastructures import Headers
 
 app = Flask(__name__)
 
@@ -42,24 +43,28 @@ def auth():
         jwtr = request.headers.get("Authorization").replace("Bearer ", "")
         data = jwt.decode(jwt=jwtr, key="secret", algorithms="HS256")
         if data["expire"] < time():
-            return Response({"message" : "token expired"},status=403)
-
+            d = Headers()
+            d.add('Content-Type', 'application/json')
+            return Response('{"message": "token expired"}', status=403, headers=d)
+    else:
+        d = Headers()
+        d.add('Content-Type', 'application/json')
+        return Response('{"message": "no token or wrong token"}', status=403, headers=d)
     return Response(status=200)
 
 
 @app.route('/login', methods=["POST"])
-
 def login():
     request_data = request.get_json()
     username = request_data["username"]
-    #    password = request.form["password"]
-    #    user = get_user(username)
-    #    if user is None:
-    #        return Response({"message": "No User found with this username!"}, status=404)
-    #
-    #    if hashlib.pbkdf2_hmac('sha256', password=password, salt=user.salt, iterations=1000) != user.password:
-    #        return Response({"message": "Wrong password!"}, status=403)
-    #    else:
+    password = request_data["password"]
+    user = get_user(username)
+    if user is None:
+       return Response({"message": "No User found with this username!"}, status=404)
+
+    if hashlib.pbkdf2_hmac('sha256', password=bytes(password, 'utf-8'), salt=user['salt'], iterations=1000) != user["password"]:
+       return Response({"message": "Wrong password!"}, status=403)
+
     data = {
         "username": username,
         "expire": time() + 60*60*24
@@ -71,10 +76,14 @@ def login():
 
 @app.route('/register', methods=["POST"])
 def register():
-    username = request.form["username"]
-    password = request.form["password"]
-    email = request.form.get("email")
-    friends = request.form.get("friends")
+    request_data = request.get_json()
+    username = request_data["username"]
+    password = request_data["password"]
+    email = request_data.get("email")
+    friends = request_data.get("friends")
+
+    h = Headers()
+    h.add('Content-Type', 'application/json')
     if email is None:
         email = ""
 
@@ -82,17 +91,18 @@ def register():
         friends = []
 
     if get_user(username) is not None:
-        return Response({"message": "Username already in use!"}, status=409)
+        return Response('{"message": "Username already in use!"}', status=409, headers=h)
     salt = os.urandom(16)
     user = {
         "username": username,
-        "password": pbkdf2_hmac('sha256', password=password, salt=salt, iterations=1000),
+        "password": pbkdf2_hmac('sha256', password=bytes(password, 'utf-8'), salt=salt, iterations=1000),
         "salt": salt,
         "email": email,
         "friends": friends
     }
 
     db.users.insert_one(user)
+    return Response(status=200)
 
 
 if __name__ == '__main__':
